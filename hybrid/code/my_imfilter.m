@@ -7,6 +7,37 @@ function output = my_imfilter(image, filter)
 %    2-D correlation is related to 2-D convolution by a 180 degree rotation
 %    of the filter matrix.
 
+%find filter size
+fSize = size(filter);
+%store x & y edge space needed.
+fxdist = (fSize(1)-1)/2;
+fydist = (fSize(2)-1)/2;
+%pad images
+padded = padarray(image, [ fydist fxdist 0 ]);
+imgsize = size(padded);
+
+disp('padded image size');
+disp(imgsize);
+
+%initialize zeros array
+newImage = zeros(imgsize);
+disp('new image size');
+disp(size(newImage));
+sizeY=imgsize(1);
+sizeX=imgsize(2);
+
+for i=fydist+1:sizeY-fydist
+    for j=fxdist+1:sizeX-fxdist
+        for rgb=1:3
+            tempMatrix=padded(i-fydist:i+fydist,j-fxdist:j+fxdist,rgb) .* filter;
+            newImage(i,j,rgb)=sum(sum(tempMatrix));
+        end
+    end
+end
+disp(size(newImage))
+originalSize=size(image);
+output=newImage(fydist+1:originalSize(1)+(2*fydist), fxdist+1:originalSize(2)+(2*fxdist), :);
+return;
 % Your function should work for color images. Simply filter each color
 % channel independently.
 
