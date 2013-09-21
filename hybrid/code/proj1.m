@@ -10,8 +10,8 @@ close all; % closes all figures
 
 %% Setup
 % read images and convert to floating point format
-image1 = im2single(imread('../data/dog.bmp'));
-image2 = im2single(imread('../data/cat.bmp'));
+image2 = im2single(imread('../data/fish.bmp'));
+image1 = im2single(imread('../data/submarine.bmp'));
 
 % Several additional test cases are provided for you, but feel free to make
 % your own (you'll need to align the images in a photo editor such as
@@ -20,7 +20,7 @@ image2 = im2single(imread('../data/cat.bmp'));
 % you asign as image2 (which will provide the high frequencies)
 
 %% Filtering and Hybrid Image construction
-cutoff_frequency = 7; %This is the standard deviation, in pixels, of the 
+cutoff_frequency = 4; %This is the standard deviation, in pixels, of the 
 % Gaussian blur that will remove the high frequencies from one image and 
 % remove the low frequencies from another image (by subtracting a blurred
 % version from the original version). You will want to tune this for every
@@ -45,13 +45,21 @@ low_frequencies = my_imfilter(image1, filter);
 % This will give you an image centered at zero with negative values.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-high_frequencies = my_imfilter(image2, inv(filter));
+%Creating high-pass filter, by unit-impulse - gaussian
+fsize = size(filter);
+unit_impulse = zeros(fsize);
+yMid = ((fsize(1)-1)/2)+1;
+xMid = ((fsize(2)-1)/2)+1;
+unit_impulse(yMid,xMid)=1;
+high_pass = unit_impulse - filter;
+
+high_frequencies = my_imfilter(image2, high_pass);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Combine the high frequencies and low frequencies
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hybrid_image = low_frequencies; 
+hybrid_image = low_frequencies + high_frequencies; 
 
 %% Visualize and save outputs
 figure(1); imshow(low_frequencies)

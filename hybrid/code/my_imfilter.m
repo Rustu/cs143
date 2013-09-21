@@ -16,13 +16,8 @@ fydist = (fSize(2)-1)/2;
 padded = padarray(image, [ fydist fxdist 0 ]);
 imgsize = size(padded);
 
-disp('padded image size');
-disp(imgsize);
-
 %initialize zeros array
 newImage = zeros(imgsize);
-disp('new image size');
-disp(size(newImage));
 sizeY=imgsize(1);
 sizeX=imgsize(2);
 
@@ -34,9 +29,8 @@ for i=fydist+1:sizeY-fydist
         end
     end
 end
-disp(size(newImage))
 originalSize=size(image);
-output=newImage(fydist+1:originalSize(1)+(2*fydist), fxdist+1:originalSize(2)+(2*fxdist), :);
+output=newImage(fydist:originalSize(1), fxdist:originalSize(2), :);
 return;
 % Your function should work for color images. Simply filter each color
 % channel independently.

@@ -1,199 +1,232 @@
 <html>
 <head>
-<title>CS 143 Project</title>
-<link href='http://fonts.googleapis.com/css?family=Nunito:300|Crimson+Text|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" title="Default" href="styles/github.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>  
+    <title>CS 143 Project</title>
+    <link href='http://fonts.googleapis.com/css?family=Nunito:300|Crimson+Text|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" title="Default" href="styles/github.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 
-<link rel="stylesheet" href="highlighting/styles/default.css">
-<script src="highlighting/highlight.pack.js"></script>
+    <link rel="stylesheet" href="highlighting/styles/default.css">
+    <script src="highlighting/highlight.pack.js"></script>
 
-<style type="text/css">
-body {
-	margin: 0px;
-	width: 100%;
-	font-family: 'Crimson Text', serif;
-	font-size: 20px;
-	background: #fcfcfc;
-}
-h1 {
-	font-family: 'Nunito', sans-serif;
-	font-weight: normal;
-	font-size: 28px;
-	margin: 25px 0px 0px 0px;
-	text-transform: lowercase;
+    <style type="text/css">
+        body {
+            margin: 0px;
+            width: 100%;
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            background: #fcfcfc;
+        }
 
-}
+        h1 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 28px;
+            margin: 25px 0px 0px 0px;
+            text-transform: lowercase;
+        }
 
-h2 {
-	font-family: 'Nunito', sans-serif;
-	font-weight: normal;
-	font-size: 32px;
-	margin: 15px 0px 35px 0px;
-	color: #333;	
-	word-spacing: 3px;
-}
+        h2 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 32px;
+            margin: 15px 0px 35px 0px;
+            color: #333;
+            word-spacing: 3px;
+        }
 
-h3 {
-	font-family: 'Nunito', sans-serif;
-	font-weight: normal;
-	font-size: 26px;
-	margin: 10px 0px 10px 0px;
-	color: #333;
-	word-spacing: 2px;
-}
-h4 {
-	font-family: 'Nunito', sans-serif;
-	font-weight: normal;
-	font-size: 22px;
-	margin: 10px 0px 10px 0px;
-	color: #333;
-	word-spacing: 2px;
-}
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 26px;
+            margin: 10px 0px 10px 0px;
+            color: #333;
+            word-spacing: 2px;
+        }
 
-h5 {
-	font-family: 'Nunito', sans-serif;
-	font-weight: normal;
-	font-size: 18px;
-	margin: 10px 0px 10px 0px;
-	color: #111;
-	word-spacing: 2px;
-}
+        h4 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 22px;
+            margin: 10px 0px 10px 0px;
+            color: #333;
+            word-spacing: 2px;
+        }
 
-p, li {
-	color: #444;
-}
+        h5 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 18px;
+            margin: 10px 0px 10px 0px;
+            color: #111;
+            word-spacing: 2px;
+        }
 
-a {
-	color: #DE3737;
-}
+        p, li {
+            color: #444;
+        }
 
-.container {
-	margin: 0px auto 0px auto;
-	width: 960px;
-}
+        a {
+            color: #DE3737;
+        }
 
-#header {
-	background: #333;
-	width: 100%;
-}
+        .container {
+            margin: 0px auto 0px auto;
+            width: 960px;
+        }
 
-#headersub {
-	color: #ccc;
-	width: 960px;
-	margin: 0px auto 0px auto;
-	padding: 20px 0px 20px 0px;
-}
+        #header {
+            background: #333;
+            width: 100%;
+        }
 
-.chart {
-	width: 480px;
-}
-.lol {
-	font-size: 16px;
-	color: #888;
-	font-style: italic;
-}
-.sep {
-	height: 1px;
-	width: 100%;
-	background: #999;
-	margin: 20px 0px 20px 0px;
-}
-.footer{
-	font-size: 16px;
-}
-.latex {
-	width: 100%;
-}
+        #headersub {
+            color: #ccc;
+            width: 960px;
+            margin: 0px auto 0px auto;
+            padding: 20px 0px 20px 0px;
+        }
 
-.latex img {
-	display: block;
-	margin: 0px auto 0px auto;
-}
+        .chart {
+            width: 480px;
+        }
 
-pre {
-	font-family: 'Droid Sans Mono';
-	font-size: 14px;
-}
+        .lol {
+            font-size: 16px;
+            color: #888;
+            font-style: italic;
+        }
 
-td img {
-  vertical-align: middle;
-}
+        .sep {
+            height: 1px;
+            width: 100%;
+            background: #999;
+            margin: 20px 0px 20px 0px;
+        }
 
-#contents a {
-}
-</style>
-<script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-</script>
+        .footer {
+            font-size: 16px;
+        }
+
+        .latex {
+            width: 100%;
+        }
+
+            .latex img {
+                display: block;
+                margin: 0px auto 0px auto;
+            }
+
+        pre {
+            font-family: 'Droid Sans Mono';
+            font-size: 14px;
+        }
+
+        td img {
+            vertical-align: middle;
+        }
+
+        #contents a {
+        }
+    </style>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
 </head>
 <body>
-<div id="header" >
-<div id="headersub">
-<h1>Your Name <span style="color: #DE3737">(your cs id)</span></h1>
-</div>
-</div>
-<div class="container">
+    <div id="header">
+        <div id="headersub">
+            <h1>Scott Kidd <span style="color: #DE3737">(shkidd)</span></h1>
+        </div>
+    </div>
+    <div class="container">
 
-<h2>CS 143 / Project 1 / Image Filtering and Hybrid Images</h2>
+        <h2>CS 143 / Project 1 / Image Filtering and Hybrid Images</h2>
 
-<div style="float: right; padding: 20px">
-<img src="placeholder.jpg" />
-<p style="font-size: 14px">Example of a right floating element.</p>
-</div>
+        <div style="float: right; padding: 20px">
+            <img src="images/fish/hybrid_image.jpg" />
+            <p style="font-size: 14px">Example of a right floating fish/submarine.</p>
+        </div>
 
-<p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>
+            This is the write-up for my implementation of the hybrid image generator. A hybrid image, as you can see on the right, is a mathematical combination of two images.
+    This image is created by combining the low frequencies of one image with the high frequencies of another image, additively. I was able to generate these low and high
+    frequency images using image filters, as we discussed in class.
+        </p>
 
-<ol>
+        <!--ol>
 <li>list element 1.</li>
 <li>list element 2.</li>
 <li>etc.</li>
-</ol>
+</!--ol-->
 
-<p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-<div style="clear:both">
-<h3>Example heading</h3>
+        <h3>Image Filtering </h3>
 
-<p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>
+            Image filtering is a process by which a matrix of values (a "filter") is applied to an image to achieve an affected image as output. The way to apply a filter is to iteratively visit 
+    each pixel in the desired output (which starts as an empty image with equivalent dimensions to the input), and calculate the value of the output pixel using the filter. The way to calculate
+    the value at any given pixel using the filter is to take the dot product of the input image centered on the current output pixel, and trimmed to the filter size, and the filter.
+    Once the dot product has been computed, the individual pixel's output value is calculated by summing across both dimensions of the dot product of the filter and subsection of the image.
+        </p>
+        <p>
+            There are a variety of different image filters that can be applied to an image, producing a variety of outputs. For this project, we primarily used the Gaussian filter.
+            The Gaussian filter is simply a filter with its X and Y values determined by the Gaussian function, such that the strength of the influence on the output pixel is strongest
+            as you approach the center of the image. The filter in this case was generated by the fspecial() matlab function.
+        </p>
+        <h3>Applying A Filter</h3>
+        <p>
+            The process of applying the filter was the majority of the work required for this project, I did this in the imfilter() function.
+            First, I padded the image with black space around its borders, so that the patch filter would be able to calculate values near the edge of the image.
+            After that, I created an empty matrix the same size as the original image, for my output.
+            Next, I iteratively visited each pixel in the output, and at each pixel calculated its new value by taking the dot product of the filter, and the image patch centered on that pixel, then summing the matrix of that calculated dot product.
+        </p>
 
-<h2>Example of code with highlighting</h2>
-The javascript in the <code>highlighting</code> folder is configured to do syntax highlighting in code blocks such as the one below.<p>
+        <div style="clear: both">
 
-<pre><code>
-%example code
-for i = 1:length(offset)
-    source = imread(sprintf('%s/source_%02d.jpg',data_dir,i));
-    mask   = imread(sprintf('%s/mask_%02d.jpg',data_dir,i));
-    target = imread(sprintf('%s/target_%02d.jpg',data_dir,i));
+            <p>
+            </p>
+
+            <h2>Iteratively calculating each pixel value</h2>
+            <p>
+                <pre><code>
+for i=fydist+1:sizeY-fydist
+    for j=fxdist+1:sizeX-fxdist
+        for rgb=1:3
+            tempMatrix=padded(i-fydist:i+fydist,j-fxdist:j+fxdist,rgb) .* filter;
+            newImage(i,j,rgb)=sum(sum(tempMatrix));
 
 </code></pre>
 
-<h3>Results in a table</h3>
+                <h3>Cats and Dogs</h3>
+                <h5>Varied along an increasing cutoff frequency from 5 to 14 by 3's</h5>
+                <table border="1">
+                    <tr>
+                        <td>
+                            <img src="images/cat_spectrum_5.jpg" width="24%" />
+                            <img src="images/cat_spectrum_8.jpg" width="24%" />
+                            <img src="images/cat_spectrum_11.jpg" width="24%" />
+                            <img src="images/cat_spectrum_14.jpg" width="24%" />
+                        </td>
+                    </tr>
 
-<table border=1>
-<tr>
-<td>
-<img src="placeholder.jpg" width="24%"/>
-<img src="placeholder.jpg"  width="24%"/>
-<img src="placeholder.jpg" width="24%"/>
-<img src="placeholder.jpg" width="24%"/>
-</td>
-</tr>
+                    <tr>
+                        <td>
+                            <img src="images/dog_spectrum_5.jpg" width="24%" />
+                            <img src="images/dog_spectrum_8.jpg" width="24%" />
+                            <img src="images/dog_spectrum_11.jpg" width="24%" />
+                            <img src="images/dog_spectrum_14.jpg" width="24%" />
+                        </td>
+                    </tr>
 
-<tr>
-<td>
-<img src="placeholder.jpg" width="24%"/>
-<img src="placeholder.jpg"  width="24%"/>
-<img src="placeholder.jpg" width="24%"/>
-<img src="placeholder.jpg" width="24%"/>
-</td>
-</tr>
+                </table>
 
-</table>
-
-<div style="clear:both" >
-<p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-</div>
+                <div style="clear: both">
+                    <p>
+                        While many image pairs could be created using cutoff frequencies as low as 7, or even 5,
+                        when I changed the ordering of the cat and dog image, so that the cat image was the one with the low frequencies,
+                        the image became a lot less clear. I found that increasing the cutoff frequency made it much clearer, albeit severely creepier.
+                        I think this must be because the cat image is mostly composed of higher frequencies, while the dog image has a greater amount of low frequency images
+                    </p>
+                </div>
 </body>
 </html>
