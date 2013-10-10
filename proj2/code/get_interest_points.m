@@ -36,9 +36,51 @@ function [x, y, confidence, scale, orientation] = get_interest_points(image, fea
 % could use this to ensure that every interest point is at a local maximum
 % of cornerness.
 
-% Placeholder that you can delete. 20 random points
-x = ceil(rand(20,1) * size(image,2));
-y = ceil(rand(20,1) * size(image,1));
+my_filter_x = fspecial('sobel');
+my_filter_y = my_filter_x';
+my_gauss = fspecial('Gaussian');
+%generate image derivatives
+Ix = imfilter(image, my_filter_x);
+Iy = imfilter(image, my_filter_y);
+
+Ix2 = Ix .* Ix;
+Iy2 = Iy .* Iy;
+Ixy = Ix .* Iy;
+%imshow(Iy2);
+%imshow(Ixy);
+cornerness = ...
+    (imfilter(Ix2, my_gauss) .* imfilter(Iy2, my_gauss))...
+    - (imfilter(Ixy, my_gauss).*imfilter(Ixy, my_gauss))...
+    - (0.02 * ...
+    ((imfilter(Ix2,my_gauss) + imfilter(Iy2, my_gauss))).^2);
+imsize=size(cornerness);
+no_edge_mask = zeros(imsize);
+border_buffer=32;
+no_edge_mask(border_buffer:imsize(1)-border_buffer, border_buffer:imsize(2)-border_buffer) = 1;
+cornerness=cornerness .* no_edge_mask;
+
+for y=1:imsize(1)
+    for x=1:imsize(2)
+        if abs(cornerness(y,x)) < 0.0001
+            cornerness(y,x)=0;
+        end
+    end
+end
+
+suppressed = blkproc(cornerness, [feature_width feature_width], @non_max);
+
+total_len = size(suppressed(:));
+% a column of indices for use with ind2sub, e.g. [1;2;3...total_len]
+suppressed_indices = [ 1:total_len(1) ]';
+% a [total_len 2] matrix of cornerness scores w/ their indices in the 1 col
+ind_val = horzcat(suppressed_indices, suppressed(:));
+% sort the big matrix, so I can keep the rows I consider important
+sorted = sortrows(ind_val, -2);
+allzeros = find(sorted(:, 2)==0);
+% allzeros(1)
+% sorted(allzeros(1)-1:allzeros(1)+1, :)
+best_indices = sorted(1:allzeros(1)-1, 1);
+[y x] = ind2sub(size(image), best_indices); 
 
 end
 

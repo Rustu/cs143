@@ -25,13 +25,24 @@ function [matches, confidences] = match_features(features1, features2)
 % Placeholder that you can delete. Random matches and confidences
 num_features1 = size(features1, 1);
 num_features2 = size(features2, 1);
-matches = zeros(num_features1, 2);
-matches(:,1) = randperm(num_features1);
-matches(:,2) = randperm(num_features2);
-confidences = rand(num_features1,1);
+f2s = [ 1:num_features2 ]';
+% matches = zeros(num_features1, 2);
+% matches(:,1) = randperm(num_features1);
+% matches(:,2) = randperm(num_features2);
+
+[ nearest dists ] = knnsearch(features1, features2, 'K', 2);
+f1s=nearest(:, 1);
+confidences = 3-( dists(:, 1) ./ dists(:, 2));
+matches = [f1s f2s];
+matches_w_confidences = [matches confidences];
+sorted = sortrows(matches_w_confidences, -3);
+top = 100;
+matches = sorted(1:top, 1:2);
+confidences = sorted(1:top, 3)
+
 
 % Sort the matches so that the most confident onces are at the top of the
 % list. You should probably not delete this, so that the evaluation
 % functions can be run on the top matches easily.
-[confidences, ind] = sort(confidences, 'descend');
-matches = matches(ind,:);
+% [confidences, ind] = sort(confidences(1:20), 'descend');
+% matches = matches(ind,:);

@@ -52,8 +52,59 @@ function [features] = get_features(image, x, y, feature_width)
 % Another simple trick which can help is to raise each element of the final
 % feature vector to some power that is less than one.
 
-% Placeholder that you can delete. Empty features.
+% my code
+up_left = [2 1 0; 1 0 0; 0 0 0];
+up = [1 2 1; 0 0 0; 0 0 0];
+up_right = [ 0 1 2; 0 0 1; 0 0 0];
+left = [1 0 0; 2 0 0; 1 0 0];
+
+right = [0 0 -1; 0 0 -2; 0 0 -1];
+down_left = [0 0 0; -1 0 0; -2 -1 0];
+down = [ 0 0 0; 0 0 0; -1 -2 -1];
+down_right = [0 0 0; 0 0 -1; 0 -1 -2];
+filtered_images=cell([1 8]);
+filtered_images{1,1} = imfilter(image, up_left);
+filtered_images{1,2} = imfilter(image, up);
+filtered_images{1,3} = imfilter(image, up_right);
+filtered_images{1,4} = imfilter(image, left);
+filtered_images{1,5} = imfilter(image, right);
+filtered_images{1,6} = imfilter(image, down_left);
+filtered_images{1,7} = imfilter(image, down);
+filtered_images{1,8} = imfilter(image, down_right);
+cellsize = feature_width/4;
 features = zeros(size(x,1), 128);
+for i=1:size(x,1)
+    yi = y(i,1);
+    xi = x(i,1);
+    % relative positions
+    cell_nums = [-2 -1 1 2];
+    start_point=1;
+    %initialize feature vector
+    feature_vector = zeros([ 1 128 ]);
+    %iterate over 4x4 array
+    for y2=1:4
+       for x2=1:4
+           %declare 1x8 feature vector
+           cell_array=zeros([1 8]);
+           cell_y = cell_nums(y2);
+           cell_x = cell_nums(x2);
+           yMin = yi + (cell_y * cellsize);
+           xMin = xi + (cell_x * cellsize);
+
+           for arrangement=1:8
+               local_matrix = filtered_images{1,arrangement}(yMin:yMin+3, xMin:xMin+3);
+               cell_array(arrangement)=mean(local_matrix(:));
+           end
+           feature_vector(start_point:start_point+7) = cell_array;
+           start_point = start_point + 8;
+       end
+    end
+    % normalize
+    feature_vector = feature_vector .* (1/norm(feature_vector));
+
+    features(i,:) = feature_vector;
+end
+
 
 
 
