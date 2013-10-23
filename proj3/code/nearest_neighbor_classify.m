@@ -15,7 +15,11 @@ function predicted_categories = nearest_neighbor_classify(train_image_feats, tra
 %  starter code.
 % predicted_categories is an M x 1 cell array, where each entry is a string
 %  indicating the predicted category for each test image.
-    
+    IDX = knnsearch(train_image_feats, test_image_feats)
+    predicted_categories = cell([size(test_image_feats, 1), 1]);
+    for i=1:size(IDX,1)
+        predicted_categories{i}=train_labels(IDX(i));
+    end
     
 %     size(train_labels)==[1500 1]
 %     size(train_image_feats)==[1500 256]

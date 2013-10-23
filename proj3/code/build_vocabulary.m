@@ -6,6 +6,8 @@
 function vocab = build_vocabulary( image_paths, vocab_size )
 % The inputs are images, a N x 1 cell array of image paths and the size of 
 % the vocabulary.
+images = cell(size(image_paths));
+
 
 % The output 'vocab' should be vocab_size x 128. Each row is a cluster
 % centroid / visual word.

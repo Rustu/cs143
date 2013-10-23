@@ -74,6 +74,8 @@ switch lower(FEATURE)
         
     case 'bag of sift'
         % YOU CODE build_vocabulary.m
+        % Must build vocabulary, appears to be 400 "words", each 128
+        % values
         if ~exist('vocab.mat', 'file')
             fprintf('No existing visual word vocabulary found. Computing one from training images\n')
             vocab_size = 400; %Larger values will work better (to a point) but be slower to compute
