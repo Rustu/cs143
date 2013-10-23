@@ -22,7 +22,7 @@ FEATURE = 'tiny image';
 CLASSIFIER = 'nearest neighbor';
 % CLASSIFIER = 'support vector machine';
 % CLASSIFIER = 'placeholder';
-
+% 
 % set up paths to VLFeat functions. 
 % See http://www.vlfeat.org/matlab/matlab.html for VLFeat Matlab documentation
 % This should work on 32 and 64 bit versions of Windows, MacOS, and Linux
