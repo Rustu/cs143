@@ -15,8 +15,8 @@
 %code does not crash when run unmodified and you can get a preview of how
 %results are presented.
 
-FEATURE = 'tiny image';
-% FEATURE = 'bag of sift';
+% FEATURE = 'tiny image';
+FEATURE = 'bag of sift';
 % FEATURE = 'placeholder';
 
 CLASSIFIER = 'nearest neighbor';
@@ -76,7 +76,7 @@ switch lower(FEATURE)
         % YOU CODE build_vocabulary.m
         % Must build vocabulary, appears to be 400 "words", each 128
         % values
-        if ~exist('vocab.mat', 'file')
+        if ~exist('vocab2.mat', 'file')
             fprintf('No existing visual word vocabulary found. Computing one from training images\n')
             vocab_size = 400; %Larger values will work better (to a point) but be slower to compute
             vocab = build_vocabulary(train_image_paths, vocab_size);
