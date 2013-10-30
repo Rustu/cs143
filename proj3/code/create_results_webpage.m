@@ -249,7 +249,7 @@ for i = 1:num_categories
             imwrite(tmp, ['results_webpage/thumbnails/' categories{i} '_' name '.jpg'], 'quality', 100)
             fprintf(fid,'<td bgcolor=#FFBB55>');
             fprintf(fid,'<img src="%s" width=%d height=%d>', ['thumbnails/' categories{i} '_' name '.jpg'], width, height);
-            fprintf(fid,'<br><small>%s</small>', false_negative_labels{j});
+            fprintf(fid,'<br><small>%s</small>', false_negative_labels{j}{1});
             fprintf(fid,'</td>\n');
         else
             fprintf(fid,'<td bgcolor=#FFBB55>');
