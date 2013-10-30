@@ -47,18 +47,23 @@ Useful functions:
 %because unique() sorts them. This shouldn't really matter, though.
 categories = unique(train_labels); 
 num_categories = length(categories);
-scores = zeros([num_categories size(train_labels, 1)]);
+category_classifiers = cell([num_categories 2]);
+scores = zeros([15 size(train_labels, 1)]);
 for i=1:num_categories
    tmp = strcmp(train_labels, categories{i});
    tmp = tmp - (1-tmp);
    [W B] = vl_svmtrain(train_image_feats', tmp', .00001);
-   scores(i, :) = W'*test_image_feats' + B;
+   size(W)
+   size(B)
+   size(test_image_feats)
+   category_classifiers{i, 1}=W;
+   category_classifiers{i, 2}=B;
+   scores(i, :) = abs(W'*test_image_feats' + B);
 end
-predicted_categories = cell(size(train_labels));
-parfor i=1:size(test_image_feats,1)
+predicted_categries = cell(size(train_labels));
+for i=1:size(test_image_feats,1)
     image_scores = scores(:, i);
-    label_index = find(image_scores==max(image_scores));
-    predicted_categories{i}=categories(label_index);
+    label_index = find(
 end
 
 
