@@ -70,7 +70,7 @@ parfor i=1:(size(images,1))
     D_matrix = zeros([1 vocab_size]);
     %feats is a 128 x 14000 w/e features in the image
     all_nearest = knnsearch(single(vocab_inv), single(feats'));
-    parfor n=1:size(all_nearest, 1)
+    for n=1:size(all_nearest, 1)
         nearest_vocab=all_nearest(n);
         D_matrix(nearest_vocab) = D_matrix(nearest_vocab)+1;
     end

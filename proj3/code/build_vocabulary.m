@@ -6,8 +6,17 @@
 function vocab = build_vocabulary( image_paths, vocab_size )
 % The inputs are images, a N x 1 cell array of image paths and the size of 
 % the vocabulary.
-images = cell(size(image_paths));
-
+images = cellfun(@imread, image_paths, 'UniformOutput', false);
+[locations all_feats] = vl_dsift(single(images{1}), 'fast', 'size', 50);
+percent=0
+for i=2:(size(images,1)/25)
+    index = 25*i
+    [locations feats] = vl_dsift(single(images{index}), 'fast', 'size', 50);
+    all_feats = cat(2, all_feats, feats);
+end
+size(all_feats)
+[vocab assignments] = vl_kmeans(single(all_feats), vocab_size);
+'done'
 
 % The output 'vocab' should be vocab_size x 128. Each row is a cluster
 % centroid / visual word.
