@@ -1,0 +1,215 @@
+<html>
+<head>
+    <title>CS 143 Project</title>
+    <link href='http://fonts.googleapis.com/css?family=Nunito:300|Crimson+Text|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" title="Default" href="styles/github.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="highlighting/styles/default.css">
+    <script src="highlighting/highlight.pack.js"></script>
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+            width: 100%;
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            background: #fcfcfc;
+        }
+
+        h1 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 28px;
+            margin: 25px 0px 0px 0px;
+            text-transform: lowercase;
+        }
+
+        h2 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 32px;
+            margin: 15px 0px 35px 0px;
+            color: #333;
+            word-spacing: 3px;
+        }
+
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 26px;
+            margin: 10px 0px 10px 0px;
+            color: #333;
+            word-spacing: 2px;
+        }
+
+        h4 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 22px;
+            margin: 10px 0px 10px 0px;
+            color: #333;
+            word-spacing: 2px;
+        }
+
+        h5 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: normal;
+            font-size: 18px;
+            margin: 10px 0px 10px 0px;
+            color: #111;
+            word-spacing: 2px;
+        }
+
+        p, li {
+            color: #444;
+        }
+
+        a {
+            color: #DE3737;
+        }
+
+        .container {
+            margin: 0px auto 0px auto;
+            width: 1160px;
+        }
+
+        #header {
+            background: #333;
+            width: 100%;
+        }
+
+        #headersub {
+            color: #ccc;
+            width: 960px;
+            margin: 0px auto 0px auto;
+            padding: 20px 0px 20px 0px;
+        }
+
+        .chart {
+            width: 480px;
+        }
+
+        .lol {
+            font-size: 16px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .sep {
+            height: 1px;
+            width: 100%;
+            background: #999;
+            margin: 20px 0px 20px 0px;
+        }
+
+        .footer {
+            font-size: 16px;
+        }
+
+        .latex {
+            width: 100%;
+        }
+
+            .latex img {
+                display: block;
+                margin: 0px auto 0px auto;
+            }
+
+        pre {
+            font-family: 'Droid Sans Mono';
+            font-size: 14px;
+        }
+
+        table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+            table td img {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+        #contents a {
+        }
+    </style>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div id="headersub">
+            <h1>scott kidd<span style="color: #DE3737">(shkidd)</span></h1>
+        </div>
+    </div>
+    <div class="container">
+
+        <h2>CS 143 / Project 4 / Face Detection with a Sliding Window</h2>
+
+        <div style="float: right; padding: 20px">
+            <img src="imgs/hog_template.png" />
+            <p style="font-size: 14px">My HoG face.</p>
+        </div>
+
+        <p>
+            Implementing a sliding window face detector is one of the more straightforward projects we've implemented, but it posed some unique challenges. The general procedure is as such:
+
+        </p>
+        <ol>
+            <li>Train a support vector machine on faces and non-faces</li>
+            <li>Slide differently scaled windows over a trial image, and score each frame according to calculated score.</li>
+            <li>Return statistically relevant scores.</li>
+        </ol>
+
+        <h3>Implementation</h3>
+        <p>
+            To train the svm on faces without giving preference to any specific face, we trained it not on actual faces, but HoG patches of images which contained faces. In this way, we could calculate the 
+            general tendency of a face, instead of a "average" of all faces, which could potentially lose enough precision to be insignificant. We calculated the HoG of our faces using the vl_hog tool, with a fixed cell size.
+            Finally, we flattened these histograms so as to make them classifiable by the SVM.
+        </p>
+
+        <p>
+            Next, we needed to find a large set of non-face objects. To do this, we were given just under 300 images, promised not to contain faces, which we were to extract non-faces from. Since we needed significantly more non-face patches than we had images, we were
+            forced to extract sub-images from the frames. This was an area with a large amount of parameters to get exactly right. The reason for this is that a dataset which was too homogeneous would be unlikely to perform well on new data.
+            However, trying to get a heterogeneous data set was difficult. Another issue was whether or not to grayscale the images. Finally, using frames from as many images as possible was important, to add diversity. 
+        </p>
+        <div style="float: right; padding: 10px">
+            <img src="imgs/flat_RGC.jpg" />
+            <p style="font-size: 14px">Gray-Scaled Red-Green Curve</p>
+        </div>
+
+        <div style="float: left; padding: 10px">
+            <img src="imgs/smooth_curve.jpg" />
+            <p style="font-size: 14px">Smooth Red-Green Curve</p>
+        </div>
+        <p>
+            To address the first problem, I simply used a small scalar while iterating, such that I would jump ahead 2-3 pixels for each iteration on the frame. I felt that this would lower the amount of frames with the same general constitution.
+            For the second problem, I performed a series of tests examining performance on grayscaled vs. non-grayscaled versions of the data set. Calling rgb2gray on the negative training examples significantly worsened my performance.
+            I believe the reason for this is that the grayscale versions of the images lost a significant amount of edge/boundary information, causing many of the images to become very similar. The reason I believe this is that the curve above shows a large flat portion of uniform negative performance around -1, as shown to the right.
+            Running this without the grayscale causes a much smoother curve within my negative examples, demonstrating a likely more heterogeneous set of negative examples. This curve is pictured below.
+        </p>
+        <p>
+            Interestingly, my performance suffered when using a completely heterogeneous set of negative examples, and the best performance I found was when I accidentally included some empty examples (zero vectors) in my negative training set.
+            I don't really have an explanation for this, except perhaps that it taught my classifier that blank spaces were non-faces. I included an example of the partially flattened
+            curve below, you can see where it flattens on the right side, for the data set which contains a number of zero vectors.
+        </p>
+        <div style="float: right; padding: 10px">
+            <img src="imgs/part_flat_RGC.jpg" />
+            <p style="font-size: 14px">Partially flat Red-Green Curve</p>
+        </div>
+        <p>
+            The last step of implementation was simply to run the classifier on the test images. This was as easy as running the frame across the entire image in HoG form. The only caveat was reaching different scales. Since this needed to fit within scales of the frame size, I just iterated over
+            multiples of 6, and used frame sizes accordingly. I added these to a vector if they surpassed a threshold score. The threshold to use to achieve reasonable results depended on the parameters from earlier. For the best parameters I found, the optimal threshold (gathered many faces, with minimal false positives), was -1.
+            So, I ran the threshold and passed it to the non-max supression function.
+        </p>
+        <p>
+            Finally, here are demonstrations of the curves of performance I achieved with my best classifier.
+        </p>
+        <div style="float: left; padding: 20px">
+            <img src="imgs/60k_negative.jpg" />
+            <p style="font-size: 14px">Performance curve, approaching 90% recall</p>
+        </div>
+</body>
+</html>
