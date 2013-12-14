@@ -1,0 +1,106 @@
+function channels = get_channels(img)
+%'img' is height x width x 3 (RGB)
+%'channels' is height x width x 14, with the 14 channels specified in
+%sketch tokens Section 2.2.1
+% imshow(img);
+% waitforbuttonpress;
+imgsize=size(img);
+img = im2single(img/255);
+
+channels = zeros([imgsize(1), imgsize(2), 14]);
+channels(:, :, 1:3) = rgbConvert(img, 'luv');
+
+zeroSig = img;
+oneFiveSig = imfilter(img, fspecial('Gaussian', 3, 1.5), 'symmetric');
+fiveSig = imfilter(img, fspecial('Gaussian', 3, 5), 'symmetric');
+
+yFilt = fspecial('Sobel');
+xFilt = yFilt';
+
+zeroSig = rgb2gray(zeroSig);
+zX = imfilter(zeroSig, xFilt, 'symmetric');
+zY = imfilter(zeroSig, yFilt, 'symmetric');
+zX2 = zX .^ 2;
+zY2 = zY .^ 2;
+summed = zX2 + zY2;
+val = sqrt(double(summed));
+channels(:, :, 4) = val;
+
+% imshow(zeroSig);
+% waitforbuttonpress;
+% imshow(zX);
+% waitforbuttonpress;
+% imshow(zX2);
+% waitforbuttonpress;
+% imshow(zY);
+% waitforbuttonpress;
+% imshow(zY2);
+% waitforbuttonpress;
+% disp('sum');
+% imshow(summed);
+% waitforbuttonpress;
+% disp('sqrt');
+% imshow(val);
+% waitforbuttonpress;
+
+
+oneFiveSig = rgb2gray(oneFiveSig);
+zX = imfilter(oneFiveSig, xFilt, 'symmetric');
+zY = imfilter(oneFiveSig, yFilt, 'symmetric');
+zX2 = zX .* zX;
+zY2 = zY .* zY;
+summed = zX2 + zY2;
+val = sqrt(double(summed));
+channels(:, :, 5) = val;
+
+fiveSig = rgb2gray(fiveSig);
+zX = imfilter(fiveSig, xFilt, 'symmetric');
+zY = imfilter(fiveSig, yFilt, 'symmetric');
+zX2 = zX .* zX;
+zY2 = zY .* zY;
+summed = zX2 + zY2;
+val = sqrt(double(summed));
+channels(:, :, 6) = val;
+
+o_grads=zeros([3 3 4]);
+o_grads(:, :, 1) = [-1 0 1; -2 0 2; -1 0 1];
+o_grads(:, :, 2) = [0 1 2; -1 0 1; -2 -1 0];
+o_grads(:, :, 3) = [1 2 1; 0 0 0; -1 -2 -1];
+o_grads(:, :, 4) = [2 1 0; 1 0 -1; 0 -1 -2];
+
+for i=1:4
+    zInd = 6+i;
+    fInd = 10+i;
+    channels(:, :, zInd) = imfilter(zeroSig, o_grads(:, :, i), 'symmetric');
+    channels(:, :, fInd) = imfilter(oneFiveSig, o_grads(:, :, i), 'symmetric');
+end
+
+% imshow(img);
+% waitforbuttonpress;
+my_gauss = fspecial('Gaussian', [3 3], 1);
+for i=1:14
+    if sum(sum(channels(:, :, i)))==0
+        fprintf('empty token %i', i);
+        disp('shiiiiiiit');
+    end
+    channels(:, :, i) = imfilter(channels(:,:,i), my_gauss, 'symmetric');
+%     imshow(channels(:, :, i));
+%     waitforbuttonpress;
+end
+% pChns = chnsCompute();
+% pChns.shrink=1;
+% pChns.pGradHist.nOrients=4;
+% chns = chnsCompute( img, pChns );
+% size(chns)
+% disp(chns);
+% d1 = chns.data(1);
+% disp(d1);
+% d1(1,1, :)
+% disp(chns.info['name']);
+% disp(chns.info.nChns(:));
+% disp(chns(1, 1, :));
+% disp(channels(1, 1, :));
+% waitforbuttonpress;
+end
+
+% helpful functions: I = rgbConvert(I,'luv') and imfilter
